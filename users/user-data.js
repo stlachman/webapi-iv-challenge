@@ -1,7 +1,3 @@
-const express = require("express");
-
-const router = express.Router();
-
 const users = [
   {
     id: 1,
@@ -46,20 +42,3 @@ const users = [
     goal: "moderate-loss"
   }
 ];
-
-// /api/users
-router.get("/", (req, res) => {
-  var userPromise = new Promise(function(resolve, reject) {
-    setTimeout(function() {
-      resolve(users);
-    }, 300);
-  });
-
-  userPromise
-    .then(user => res.status(200).json(user))
-    .catch(err => {
-      res.status(500).json({ message: "error retrieving user" });
-    });
-});
-
-module.exports = router;

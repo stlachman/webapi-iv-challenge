@@ -9,6 +9,6 @@ server.get("/", (req, res) => {
   res.status(200).send("Welcome To User");
 });
 
-server.use("/api/user", userRoutes);
+server.use("/api/users", userRoutes);
 
 module.exports = server;
