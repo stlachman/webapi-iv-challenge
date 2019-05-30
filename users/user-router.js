@@ -49,14 +49,43 @@ const users = [
 
 // /api/users
 router.get("/", (req, res) => {
-  var userPromise = new Promise(function(resolve, reject) {
-    setTimeout(function() {
-      resolve(users);
-    }, 300);
-  });
+  const userPromise = () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(users);
+      }, 300);
+    });
+  };
 
-  userPromise
+  userPromise()
     .then(user => res.status(200).json(user))
+    .catch(err => {
+      res.status(500).json({ message: "error retrieving user" });
+    });
+});
+
+function findUser(arr, id) {
+  return arr.find(user => user.id === parseInt(id));
+}
+
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
+  const userPromise = () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(users);
+      }, 300);
+    });
+  };
+  userPromise()
+    .then(users => {
+      let user = findUser(users, id);
+      if (user) {
+        res.status(200).json(user);
+      } else {
+        res.status(404).json({ message: "No user with that id" });
+      }
+    })
     .catch(err => {
       res.status(500).json({ message: "error retrieving user" });
     });
